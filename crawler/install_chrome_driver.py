@@ -1,4 +1,5 @@
-import chromedriver_install as cdi
+import pyderman as dr
 
-path = cdi.install(file_directory='c:\\data\\chromedriver\\', verbose=True, chmod=True, overwrite=False, version=None)
+path = dr.install(browser=dr.chrome, file_directory='./lib/', verbose=True, chmod=True, overwrite=False, version=None,
+                  filename="chromedriver.exe", return_info=False)
 print('Installed chromedriver to path: %s' % path)
