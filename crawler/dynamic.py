@@ -1,19 +1,52 @@
-from selenium import webdriver
-import time
+from bs4 import BeautifulSoup
+import urllib.request
+import urllib
+from urllib.parse import urljoin
+from crawler.ContentFetcher import ContentFetcher
+content_fetcher = ContentFetcher()
+weburl='https://summerofcode.withgoogle.com/organizations'
+html = content_fetcher.fetch(weburl)
 
-driver = webdriver.Chrome(executable_path='.\\lib\\chromedriver.exe')  # It could also be PhantomJS instead of Chrome
-driver.get("https://summerofcode.withgoogle.com/organizations")
+'''
+def tag_visible(element):
+    if element.parent.name in ['style', 'script', 'head', 'title', 'meta', '[document]']:
+        return False
+    if isinstance(element, Comment):
+        return False
+    return True
 
-SCROLL_PAUSE_TIME = 3
 
-last_height = driver.execute_script("return document.body.scrollHeight")
+def text_from_html(body):
+    soup = BeautifulSoup(body, 'html.parser')
+    texts = soup.findAll(text=True)
+    visible_texts = filter(tag_visible, texts)
+    return u" ".join(t.strip() for t in visible_texts)
 
-while True:
-    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    time.sleep(SCROLL_PAUSE_TIME)
-    new_height = driver.execute_script("return document.body.scrollHeight")
-    if new_height == last_height:
-        break
-    last_height = new_height
+print(text_from_html(driver.page_source))
 
-print(driver.page_source)
+#print(driver.page_source)'''
+soup = BeautifulSoup(html, 'html.parser')
+
+# print(soup.find_all('a',href=True))
+
+s = set()
+for link in soup.find_all('a', href=True):
+  #  print(type(link['href']))
+   # print(link.get('href'))
+    li=urljoin(weburl,link.get('href'))
+    s.add(li)
+for li in s:
+    print(li)
+
+
+'''  
+y=0
+qfile=open('queue.txt','w+')
+for gatheredlinks in li:
+     qfile.write(gatheredlinks)
+     y+=1
+     print(y)
+qfile.close()
+'''
+
+

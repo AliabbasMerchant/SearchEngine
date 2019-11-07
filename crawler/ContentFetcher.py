@@ -4,7 +4,7 @@ import time
 
 
 class ContentFetcher:
-    def __int__(self):
+    def __init__(self):
         opts = webdriver.ChromeOptions()
         opts.headless = True
 
@@ -25,8 +25,9 @@ class ContentFetcher:
                     break
                 last_height = new_height
                 limit += 1
-                if limit >= scroll_limit:
-                    break
+                if scroll_limit is not None:
+                    if limit >= scroll_limit:
+                        break
         return driver.page_source
 
     def fetch_statically(self, url: str) -> str:
