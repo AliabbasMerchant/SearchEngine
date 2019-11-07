@@ -1,10 +1,9 @@
 from bs4 import BeautifulSoup
-import urllib.request
-import urllib
 from urllib.parse import urljoin
 from crawler.ContentFetcher import ContentFetcher
+
 content_fetcher = ContentFetcher()
-weburl='https://summerofcode.withgoogle.com/organizations'
+weburl = 'https://summerofcode.withgoogle.com/organizations'
 html = content_fetcher.fetch(weburl)
 
 '''
@@ -25,19 +24,17 @@ def text_from_html(body):
 print(text_from_html(driver.page_source))
 
 #print(driver.page_source)'''
+
 soup = BeautifulSoup(html, 'html.parser')
 
 # print(soup.find_all('a',href=True))
 
 s = set()
 for link in soup.find_all('a', href=True):
-  #  print(type(link['href']))
-   # print(link.get('href'))
-    li=urljoin(weburl,link.get('href'))
+    li = urljoin(weburl, link.get('href'))
     s.add(li)
 for li in s:
     print(li)
-
 
 '''  
 y=0
@@ -48,5 +45,3 @@ for gatheredlinks in li:
      print(y)
 qfile.close()
 '''
-
-
