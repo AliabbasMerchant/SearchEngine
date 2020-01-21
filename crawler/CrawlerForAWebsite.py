@@ -38,3 +38,4 @@ class CrawlerForAWebsite:
 if __name__ == '__main__':
     crawler = CrawlerForAWebsite("https://www.geeksforgeeks.org")
     crawler.crawl()
+

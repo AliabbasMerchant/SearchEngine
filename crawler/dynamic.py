@@ -35,13 +35,3 @@ for link in soup.find_all('a', href=True):
     s.add(li)
 for li in s:
     print(li)
-
-'''  
-y=0
-qfile=open('queue.txt','w+')
-for gatheredlinks in li:
-     qfile.write(gatheredlinks)
-     y+=1
-     print(y)
-qfile.close()
-'''
