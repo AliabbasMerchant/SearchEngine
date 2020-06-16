@@ -5,28 +5,35 @@ import requests
 
 class token:
     def __init__(self,links):
-        self.link=links
-
-    def textgen(self,link):
-        self.access=requests.get(self.link)
-        self.getcontent=self.access.content
-        self.soup=BeautifulSoup(self.getcontent,'html.parser')
-        for script in self.soup(["script","style"]):
+       self.link=links
+#function to fetch  text from html
+    def textgen(self):
+        access=requests.get(self.link)
+        getcontent=access.content
+        soup=BeautifulSoup(getcontent,'html.parser')
+        for script in soup(["script","style"]):
            script.extract()
-        self.textt=self.soup.get_text()
+        textt=soup.get_text()
+        return textt
 
-        return self.textt
+    def tokenizer(self):
+        nlp=spacy.load('en_core_web_sm')
+        doc=nlp(self.textgen())
+        character="=,<,>,@,#,$,%,^,&,*,_,-,+,~,`,|,\,/"
+        dict_of_tokens = dict()
+        setotoken=set()
+        for token in doc:
+            if  token.is_stop==False and token.is_space==False and token.is_alpha and \
+                    token.is_punct==False and token.like_url==False and \
+                    token.like_num==False and token.text not in character and len(token.orth_)!=1:
+                lem=token.lemma_
+                setotoken.add(lem)
+                list_of_tokens=list(setotoken)
 
-    def tokenizer(self,link):
-        self.nlp=spacy.load('en_core_web_sm')
-        self.doc=self.nlp(self.textgen(self.link))
-        self.cha="=,<,>,@,#,$,%,^,&,*,_,-,+,~,`,|,\,/"
-        self.setotoken=set()
-        for self.token in self.doc:
-            if  self.token.is_stop==False and self.token.is_space==False and self.token.is_alpha and self.token.is_punct==False and self.token.like_url==False and self.token.like_num==False and self.token.text not in self.cha and len(self.token.orth_)!=1:
-                self.lem=self.token.lemma_
-                self.setotoken.add(self.lem)
-        print(self.setotoken)
+                dict_of_tokens[self.link]= list_of_tokens
+
+        return dict_of_tokens
 
 
-token("https://www.geeksforgeeks.org/").tokenizer("https://www.geeksforgeeks.org/")
+if __name__ == '__main__':
+   token("https://www.geeksforgeeks.org").tokenizer()

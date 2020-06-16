@@ -2,6 +2,8 @@ from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 from crawler.ContentFetcher import ContentFetcher
 import crawler.utils as utils
+import time
+import concurrent.futures
 
 
 class CrawlerForAWebsite:
@@ -14,14 +16,24 @@ class CrawlerForAWebsite:
 
     def crawl(self) -> None:
         count = 0
+        start_time = time.time()
         self.queue.add(self.main_url)
         while count < self.limit and len(self.queue) > 0:
             count += 1
             url = self.queue.pop()
+
             content, links = self.get_content_and_same_domain_links(url)
+
             self.content[url] = content
-            print(f"URL {url} has {len(links)} links")
+            end_time=time.time()
+            print(f"URL {url} has {len(links)} links in {end_time  - start_time} sec")
+            with open('crawled_file', 'a') as f:
+
+                f.write(url)
+                f.write('\n')
             self.queue.update(links)
+
+
 
     def get_content_and_same_domain_links(self, url: str) -> (str, list):
         content_fetcher = ContentFetcher()
@@ -36,6 +48,7 @@ class CrawlerForAWebsite:
 
 
 if __name__ == '__main__':
-    crawler = CrawlerForAWebsite("https://www.geeksforgeeks.org")
+    crawler = CrawlerForAWebsite("https://github.com/")
     crawler.crawl()
+
 

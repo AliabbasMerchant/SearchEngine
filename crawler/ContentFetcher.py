@@ -1,5 +1,6 @@
 import requests
 from selenium import webdriver
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 import time
 
 
@@ -7,9 +8,13 @@ class ContentFetcher:
     def __init__(self):
         opts = webdriver.ChromeOptions()
         opts.headless = True
+        caps = DesiredCapabilities().CHROME
+        caps["pageLoadStrategy"] = "eager"
 
-        self.driver = webdriver.Chrome(executable_path='.\\lib\\chromedriver.exe', options=opts)
-        self.SCROLL_PAUSE_TIME = 3
+
+        self.driver = webdriver.Chrome(desired_capabilities=caps,executable_path='.\\lib\\chromedriver.exe', options=opts)
+        #self.driver = webdriver.Chrome( executable_path='.\\lib\\chromedriver.exe',options=opts)
+        self.SCROLL_PAUSE_TIME = 2
 
     def fetch_dynamically(self, url: str, scroll: bool = True, scroll_limit: int = None) -> str:
         driver = self.driver
@@ -36,6 +41,8 @@ class ContentFetcher:
 
     def fetch(self, url: str, dynamic: bool = True) -> str:
         if dynamic:
+
             return self.fetch_dynamically(url)
         else:
+
             return self.fetch_statically(url)

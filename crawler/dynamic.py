@@ -1,10 +1,21 @@
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
-from crawler.ContentFetcher import ContentFetcher
+import requests
+import time
+import crawler.utils as utils
+x = 10
+def bar():
 
-content_fetcher = ContentFetcher()
-weburl = 'https://summerofcode.withgoogle.com/organizations'
-html = content_fetcher.fetch(weburl)
+    print(x)
+    x += 1
+#
+# content_fetcher = ContentFetcher()
+# weburl = 'https://summerofcode.withgoogle.com/organizations'
+# html = content_fetcher.fetch(weburl)
+
+
+
+
 
 '''
 def tag_visible(element):
@@ -23,15 +34,17 @@ def text_from_html(body):
 
 print(text_from_html(driver.page_source))
 
-#print(driver.page_source)'''
-
-soup = BeautifulSoup(html, 'html.parser')
-
-# print(soup.find_all('a',href=True))
-
-s = set()
-for link in soup.find_all('a', href=True):
-    li = urljoin(weburl, link.get('href'))
-    s.add(li)
-for li in s:
-    print(li)
+#print(driver.page_source)
+ def crawl(self) -> None:
+         '''
+#
+# soup = BeautifulSoup(html, 'html.parser')
+#
+# # print(soup.find_all('a',href=True))
+#
+# s = set()
+# for link in soup.find_all('a', href=True):
+#     li = urljoin(weburl, link.get('href'))
+#     s.add(li)
+# for li in s:
+#     print(li)
