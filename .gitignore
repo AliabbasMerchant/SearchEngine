@@ -86,8 +86,6 @@ celerybeat-schedule
 # SageMath parsed files
 *.sage.py
 
-# Ignore all text files
-*.txt
 
 # Environments
 .env
