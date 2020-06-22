@@ -3,12 +3,9 @@ from urllib.parse import urljoin
 import requests
 import time
 import crawler.utils as utils
-x = 10
-def bar():
+from crawler.stopword import token
 
-    print(x)
-    x += 1
-#
+
 # content_fetcher = ContentFetcher()
 # weburl = 'https://summerofcode.withgoogle.com/organizations'
 # html = content_fetcher.fetch(weburl)

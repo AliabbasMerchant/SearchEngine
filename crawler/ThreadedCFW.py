@@ -25,6 +25,7 @@ class CrawlerForAWebsite:
 
                 content, links = self.get_content_and_same_domain_links(url)
 
+
                 self.content[url] = content
 
                 end_time = time.time()
@@ -49,9 +50,9 @@ class CrawlerForAWebsite:
 
 
 if __name__ == '__main__':
-    crawler = CrawlerForAWebsite("https://summerofcode.withgoogle.com/")
+    crawler = CrawlerForAWebsite('https://www.geeksforgeeks.org')
     content_fetcher = ContentFetcher()
-    print(crawler.queue)
+
     count = 0
     def worker(url):
         crawler.crawl(url)
